@@ -139,3 +139,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+genres.tar.gz
+/projects/music_genre_classification/music_genre_classification/data/
+/projects/music_genre_classification/music_genre_classification/genres/
