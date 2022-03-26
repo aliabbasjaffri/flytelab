@@ -2,14 +2,14 @@ import torch
 from torch import nn
 from typing import List, Dict
 from torch.utils.data import DataLoader
-from model import MultiTemporalFeatureMap
+from model import MusicGenreClassificationModel
 from data_split import generate_data_split
 from utils import get_default_device, to_device
 from torchaudio.datasets.gtzan import gtzan_genres
 
 
 @torch.no_grad()
-def evaluate(model: MultiTemporalFeatureMap, test_dataloader: DataLoader):
+def evaluate(model: MusicGenreClassificationModel, test_dataloader: DataLoader):
     model.eval()
     outputs = [model.validation_step(batch) for batch in test_dataloader]
     return model.validation_epoch_end(outputs)
@@ -28,12 +28,12 @@ def train(
     optimization_function=torch.optim.Adam,
     weight_decay: float = 0.0,
     gradient_clip: float = None,
-) -> (List[any], MultiTemporalFeatureMap):
+) -> (List[any], MusicGenreClassificationModel):
     torch.cuda.empty_cache()
     history = []
 
     model = to_device(
-        data=MultiTemporalFeatureMap(in_channels=1, num_classes=len(gtzan_genres)),
+        data=MusicGenreClassificationModel(in_channels=1, num_classes=len(gtzan_genres)),
         device=get_default_device(),
     )
     print(model)

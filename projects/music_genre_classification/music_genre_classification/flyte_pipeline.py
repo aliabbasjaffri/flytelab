@@ -1,7 +1,7 @@
 from datasource import download_raw_dataset
 from preprocess import preprocess_data
 from data_split import generate_data_split
-from model import MultiTemporalFeatureMap
+from model import MusicGenreClassificationModel
 from train import train, evaluate
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
@@ -60,7 +60,7 @@ def train_model(
     optimization_function: any,
     weight_decay: float,
     gradient_clip: float,
-) -> (List[any], MultiTemporalFeatureMap):
+) -> (List[any], MusicGenreClassificationModel):
 
     return train(
         epochs=epochs,
@@ -74,13 +74,13 @@ def train_model(
 
 
 @task
-def evaluate_model(model: MultiTemporalFeatureMap, test_dataloader: DataLoader):
+def evaluate_model(model: MusicGenreClassificationModel, test_dataloader: DataLoader):
     return evaluate(model=model, test_dataloader=test_dataloader)
 
 
 @workflow
 # def music_genre_classifier() -> (Dict[str, any], MultiTemporalFeatureMap):
-def music_genre_classifier() -> MultiTemporalFeatureMap:
+def music_genre_classifier() -> MusicGenreClassificationModel:
     training_params = TrainingParameters()
     download_dataset(target_folder=".", download=True)
     data_preprocessing()

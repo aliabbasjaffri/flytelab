@@ -85,7 +85,7 @@ def conv_block3(in_channels, out_channels, pool=False):
     return nn.Sequential(*layers)
 
 
-class MultiTemporalFeatureMap(MusicGenreClassificationBase):
+class MusicGenreClassificationModel(MusicGenreClassificationBase):
     def __init__(self, in_channels, num_classes):
         super().__init__()
 
