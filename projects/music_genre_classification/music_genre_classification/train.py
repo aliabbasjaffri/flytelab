@@ -1,16 +1,15 @@
 import torch
 from torch import nn
+from typing import List, Dict
 from torch.utils.data import DataLoader
 from model import MultiTemporalFeatureMap
 from data_split import generate_data_split
-from torchaudio.datasets.gtzan import gtzan_genres
 from utils import get_default_device, to_device
+from torchaudio.datasets.gtzan import gtzan_genres
 
 
 @torch.no_grad()
-def evaluate(
-    model: MultiTemporalFeatureMap, test_dataloader: DataLoader
-) -> dict[str, any]:
+def evaluate(model: MultiTemporalFeatureMap, test_dataloader: DataLoader):
     model.eval()
     outputs = [model.validation_step(batch) for batch in test_dataloader]
     return model.validation_epoch_end(outputs)
@@ -29,7 +28,7 @@ def train(
     optimization_function=torch.optim.Adam,
     weight_decay: float = 0.0,
     gradient_clip: float = None,
-) -> MultiTemporalFeatureMap:
+) -> (List[any], MultiTemporalFeatureMap):
     torch.cuda.empty_cache()
     history = []
 
@@ -80,8 +79,7 @@ def train(
         print(result)
         history.append(result)
     # add history to mlflow
-    print(history)
-    return model
+    return history, model
 
 
 if __name__ == "__main__":
