@@ -8,3 +8,4 @@ matplotlib==3.5.1
 black==22.1.0
 pydub==0.25.1
 ffmpeg==1.4
+bentoml>=1.0.0a
